@@ -6,6 +6,10 @@ import java.util.EnumSet;
 import static net.mindview.util.Print.print;
 
 public class CarWash {
+    // 了解EnumSet.of()用法
+    /**
+     * 初始化取枚举类的两个实例
+     */
     EnumSet<Cycle> cycles = EnumSet.of(Cycle.BASIC, Cycle.RINSE);
 
     public static void main(String[] args) {
@@ -16,6 +20,7 @@ public class CarWash {
         wash.add(Cycle.BLOWDRY);
         // Duplicates ignored
         wash.add(Cycle.BLOWDRY);
+        // Duplicates ignored
         wash.add(Cycle.RINSE);
         wash.add(Cycle.HOTWAX);
         print(wash);
