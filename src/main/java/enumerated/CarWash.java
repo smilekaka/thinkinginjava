@@ -5,10 +5,16 @@ import java.util.EnumSet;
 
 import static net.mindview.util.Print.print;
 
+/**
+ * 展示了一个洗车的动作选择菜单（EnumSet集合）
+ * EnumSet的特性：元素不能重复，和普通的Set集合一样
+ * 向EnumSet添加enum实例的顺序不重要，其输出的次序由enum实例定义时的次序决定。
+ * 与使用匿名内部类相比较，定义常量相关方法的语法更高效、简洁
+ */
 public class CarWash {
-    // 了解EnumSet.of()用法
     /**
-     * 初始化取枚举类的两个实例
+     * 初始化取枚举类的两个实例（洗车的基本步骤）
+     * 了解EnumSet.of()用法
      */
     EnumSet<Cycle> cycles = EnumSet.of(Cycle.BASIC, Cycle.RINSE);
 
@@ -31,6 +37,9 @@ public class CarWash {
         cycles.add(cycle);
     }
 
+    /**
+     * 洗车（展示洗车的各种动作）
+     */
     public void washCar() {
         for (Cycle c : cycles) {
             c.action();
@@ -42,6 +51,9 @@ public class CarWash {
         return cycles.toString();
     }
 
+    /**
+     * 洗车选择菜单
+     */
     public enum Cycle {
         UNDERBODY {
             @Override
@@ -88,6 +100,7 @@ public class CarWash {
 
         abstract void action();
     }
+
 } /* Output:
 [BASIC, RINSE]
 The basic wash
