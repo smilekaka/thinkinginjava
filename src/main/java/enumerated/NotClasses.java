@@ -27,6 +27,10 @@ enum LikeClasses {
     abstract void behavior();
 }
 
+/**
+ * 不能将enum实例作为一个类型来使用
+ * 原因：分析编译器生成的代码可知，每个enum元素都是一个LikeClasses类型的static final实例。
+ */
 public class NotClasses {
     // void f1(LikeClasses.WINKEN instance) {} // Nope
 } /* Output:
