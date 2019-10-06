@@ -8,6 +8,9 @@ import java.util.Iterator;
 
 import static net.mindview.util.Print.print;
 
+/**
+ * 展示了使用enum的职责链
+ */
 class Mail {
     static long counter = 0;
     GeneralDelivery generalDelivery;
@@ -18,8 +21,15 @@ class Mail {
     long id = counter++;
 
     // Generate test Mail:
+
+    /**
+     * 随机生成邮件
+     *
+     * @return
+     */
     public static Mail randomMail() {
         Mail m = new Mail();
+        // 随机生成各种邮件特征
         m.generalDelivery = Enums.random(GeneralDelivery.class);
         m.scannability = Enums.random(Scannability.class);
         m.readability = Enums.random(Readability.class);
@@ -65,6 +75,7 @@ class Mail {
     }
 
     // The NO's lower the probability of random selection:
+    // 邮件的关键特征 Start （用enum表示）
     enum GeneralDelivery {
         YES, NO1, NO2, NO3, NO4, NO5
     }
@@ -76,6 +87,7 @@ class Mail {
     enum Address {INCORRECT, OK1, OK2, OK3, OK4, OK5, OK6}
 
     enum ReturnAddress {MISSING, OK1, OK2, OK3, OK4, OK5}
+    // 邮件的关键特征 End （用enum表示）
 }
 
 public class PostOffice {
@@ -85,24 +97,36 @@ public class PostOffice {
                 return;
             }
         }
-        print(m + " is a dead letter");
+        print("    " + m + " is a dead letter");
     }
 
+    /**
+     * 对每一封邮件（包含各种邮件关键特征的），按enum MailHandler定义的次序尝试每个解决策略，直到其中一个能够成功地处理该邮件，
+     * 如果所有策略都失败了，那么该邮件将被判定为一封死信。
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         for (Mail mail : Mail.generator(10)) {
-            print(mail.details());
+            print("包含各种关键特征的邮件详情信息：");
+            print("    " + mail.details());
+            print("邮件的处理策略：");
             handle(mail);
             print("*****");
+            print("\n");
         }
     }
 
+    /**
+     * 由enum MailHandler实现责任链
+     */
     enum MailHandler {
         GENERAL_DELIVERY {
             @Override
             boolean handle(Mail m) {
                 switch (m.generalDelivery) {
                     case YES:
-                        print("Using general delivery for " + m);
+                        print("    Using general delivery for " + m);
                         return true;
                     default:
                         return false;
@@ -120,7 +144,7 @@ public class PostOffice {
                             case INCORRECT:
                                 return false;
                             default:
-                                print("Delivering " + m + " automatically");
+                                print("    Delivering " + m + " automatically");
                                 return true;
                         }
                 }
@@ -137,7 +161,7 @@ public class PostOffice {
                             case INCORRECT:
                                 return false;
                             default:
-                                print("Delivering " + m + " normally");
+                                print("    Delivering " + m + " normally");
                                 return true;
                         }
                 }
@@ -150,7 +174,7 @@ public class PostOffice {
                     case MISSING:
                         return false;
                     default:
-                        print("Returning " + m + " to sender");
+                        print("    Returning " + m + " to sender");
                         return true;
                 }
             }
