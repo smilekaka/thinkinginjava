@@ -1,3 +1,4 @@
+// 19.10.1 使用enum的职责链
 //: enumerated/PostOffice.java
 package enumerated; /* Added by Eclipse.py */
 // Modeling a post office.
