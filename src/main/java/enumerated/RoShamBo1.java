@@ -1,3 +1,4 @@
+// 19.11 普通的多路分发实现
 //: enumerated/RoShamBo1.java
 // Demonstration of multiple dispatching.
 package enumerated;
@@ -6,7 +7,16 @@ import java.util.Random;
 
 import static enumerated.Outcome.*;
 
+/**
+ * Item是石头、剪刀、布的接口，将会被用作多路分发
+ */
 interface Item {
+    /**
+     * 通过调用Item.compete()方法开始两路分发
+     *
+     * @param it
+     * @return
+     */
     Outcome compete(Item it);
 
     Outcome eval(Paper p);
@@ -82,6 +92,9 @@ class Rock implements Item {
     }
 }
 
+/**
+ * 实现一个“石头，剪刀，布”游戏
+ */
 public class RoShamBo1 {
     static final int SIZE = 20;
     private static Random rand = new Random(47);
